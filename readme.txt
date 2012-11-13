@@ -14,7 +14,7 @@ Stable tag: 20121102
 Version: 20121102
 License: GPL v2
 	
-[GA Google Analytics](http://perishablepress.com/google-analytics-plugin/) adds your Google Analytics Tracking Code to your WordPress site.
+GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
 
 == Description ==
 
