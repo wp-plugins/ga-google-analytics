@@ -1,4 +1,4 @@
-=== Google Analytics Plugin ===
+=== GA Google Analytics ===
 
 Plugin Name: GA Google Analytics
 Plugin URI: http://perishablepress.com/google-analytics-plugin/
