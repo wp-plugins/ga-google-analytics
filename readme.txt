@@ -6,7 +6,7 @@ Description: Adds your Google Analytics Tracking Code to your WordPress site.
 Tags: analytics, ga, google, google analytics, tracking, statistics, stats
 Author: Jeff Starr
 Author URI: http://monzilla.biz/
-Contributors: Jeff Starr
+Contributors: specialk
 Donate link: http://digwp.com/book/
 Requires at least: 3.0
 Tested up to: 3.4.2
