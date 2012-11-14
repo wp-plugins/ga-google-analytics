@@ -15,7 +15,7 @@
 
 $gap_plugin  = __('GA Google Analytics');
 $gap_options = get_option('gap_options');
-$gap_path    = plugin_basename(__FILE__); // 'google-analytics-plugin/google-analytics-plugin.php';
+$gap_path    = plugin_basename(__FILE__); // 'ga-google-analytics/ga-google-analytics.php';
 $gap_homeurl = 'http://perishablepress.com/google-analytics-plugin/';
 $gap_version = '20121102';
 
@@ -121,7 +121,7 @@ function gap_render_form() {
 	global $gap_plugin, $gap_options, $gap_path, $gap_homeurl, $gap_version; ?>
 
 	<style type="text/css">
-		.mm-panel-overview { padding-left: 100px; background: url(<?php echo plugins_url(); ?>/google-analytics-plugin/gap-logo.png) no-repeat 15px 0; }
+		.mm-panel-overview { padding-left: 100px; background: url(<?php echo plugins_url(); ?>/ga-google-analytics/gap-logo.png) no-repeat 15px 0; }
 
 		#mm-plugin-options h2 small { font-size: 60%; }
 		#mm-plugin-options h3 { cursor: pointer; }
