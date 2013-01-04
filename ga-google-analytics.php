@@ -17,7 +17,7 @@ $gap_plugin  = __('GA Google Analytics');
 $gap_options = get_option('gap_options');
 $gap_path    = plugin_basename(__FILE__); // 'ga-google-analytics/ga-google-analytics.php';
 $gap_homeurl = 'http://perishablepress.com/google-analytics-plugin/';
-$gap_version = '20121102';
+$gap_version = '20130103';
 
 // require minimum version of WordPress
 add_action('admin_init', 'gap_require_wp_version');
