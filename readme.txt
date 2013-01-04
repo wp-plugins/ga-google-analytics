@@ -9,9 +9,9 @@ Author URI: http://monzilla.biz/
 Contributors: specialk
 Donate link: http://digwp.com/book/
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 20121102
-Version: 20121102
+Tested up to: 3.5
+Stable tag: 20130103
+Version: 20130103
 License: GPL v2
 	
 GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
@@ -44,6 +44,10 @@ To upgrade, remove old version and replace with new version. Nothing else needs 
 Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Changelog ==
+
+**Version 20130103**
+
+* Added margins to submit buttons (now required in WP 3.5)
 
 **Version 20121102**
 

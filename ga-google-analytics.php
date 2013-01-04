@@ -5,7 +5,7 @@
 	Description: Adds Google Analytics Tracking Code to your WordPress site.
 	Author: Jeff Starr
 	Author URI: http://monzilla.biz/
-	Version: 20121102
+	Version: 20130103
 	License: GPL v2
 	Usage: Visit the "Google Analytics" options page to enter your GA ID and done.
 	Tags: analytics, ga, google, google analytics, tracking, statistics, stats
@@ -141,7 +141,7 @@ function gap_render_form() {
 
 		#setting-error-settings_updated { margin: 10px 0; }
 		#setting-error-settings_updated p { margin: 5px; }
-		.button-primary { margin: 0 0 15px 15px; }
+		#mm-plugin-options .button-primary { margin: 0 0 15px 15px; }
 
 		#mm-panel-toggle { margin: 5px 0; }
 		#mm-credit-info { margin-top: -5px; }
