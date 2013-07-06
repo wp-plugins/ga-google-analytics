@@ -34,15 +34,15 @@ Inserts tracking code only, view your stats in your Google account.
 1. Unzip, Upload, activate
 2. Visit the "Google Analytics" options page, enter your GA ID, and done.
 
-For more information, visit the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
-
-== Upgrade Notice ==
+**Upgrade Notice**
 
 To upgrade: 
 
 1. Remove old version and replace with new version.
 2. Visit the GA Plugin Options panel and choose where to include the code (header or footer).
 3. Save changes and view the source code of your page(s) to verify that the code is included.
+
+For more information, visit the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Screenshots ==
 
