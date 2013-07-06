@@ -7,13 +7,13 @@ Tags: analytics, ga, google, google analytics, tracking, statistics, stats
 Author: Jeff Starr
 Author URI: http://monzilla.biz/
 Contributors: specialk
-Donate link: http://digwp.com/book/
+Donate link: http://m0n.co/donate
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 20130103
-Version: 20130103
+Stable tag: 20130705
+Version: 20130705
 License: GPL v2
-	
+
 GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
 
 == Description ==
@@ -24,6 +24,7 @@ Inserts tracking code only, view your stats in your Google account.
 
 * Drop-dead simple and easy to use
 * Uses latest version of GA Tracking Code
+* Include GA Tracking Code in header or footer
 * Inserts your tracking code on all theme pages
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
@@ -37,13 +38,25 @@ For more information, visit the [GA Plugin Homepage](http://perishablepress.com/
 
 == Upgrade Notice ==
 
-To upgrade, remove old version and replace with new version. Nothing else needs done.
+To upgrade: 
+
+1. Remove old version and replace with new version.
+2. Visit the GA Plugin Options panel and choose where to include the code (header or footer).
+3. Save changes and view the source code of your page(s) to verify that the code is included.
 
 == Screenshots ==
 
 Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Changelog ==
+
+**Version 20130705**
+
+* Added option to display in header or footer
+* Overview and Updates admin panels toggled open by default
+* Implemented translation support
+* Added info to settings page
+* General plugin check and code tuning
 
 **Version 20130103**
 
@@ -66,6 +79,6 @@ To ask a question, visit the [GA Plugin Homepage](http://perishablepress.com/goo
 
 == Donations ==
 
-I created this plugin with love for the WP community. To show support, consider purchasing my new book, [.htaccess made easy](http://htaccessbook.com/), or my WordPress book, [Digging into WordPress](http://digwp.com/).
+I created this plugin with love for the WP community. To show support, consider purchasing one of my books: [The Tao of WordPress](http://wp-tao.com/), [Digging into WordPress](http://digwp.com/), or [.htaccess made easy](http://htaccessbook.com/).
 
 Links, tweets and likes also appreciated. Thanks! :)
