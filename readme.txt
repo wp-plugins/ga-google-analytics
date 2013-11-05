@@ -31,7 +31,7 @@ Inserts tracking code only, view your stats in your Google account.
 * Now supports Universal Analytics/Analytics.js
 * Now supports Display Advertising
 
-Learn more about [http://www.google.com/analytics/](Google Analytics)!
+Learn more about Google Analytics @ http://www.google.com/analytics/
 
 == Installation ==
 
