@@ -28,10 +28,10 @@ Inserts tracking code only, view your stats in your Google account.
 * Inserts your tracking code on all theme pages
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
-* Now supports Universal Analytics/Analytics.js
-* Now supports Display Advertising
+* Now supports [Universal Analytics/Analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
+* Now supports [Display Advertising](https://support.google.com/analytics/answer/2444872)
 
-Learn more about Google Analytics @ http://www.google.com/analytics/
+Learn more about [Google Analytics](http://www.google.com/analytics/)!
 
 == Installation ==
 
@@ -59,8 +59,8 @@ Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/goo
 **Version 20131104**
 
 * Added line to check for WP, prevent direct loading of script
-* Added support for [https://support.google.com/analytics/answer/2444872](Display Advertising)
-* Added support for [https://developers.google.com/analytics/devguides/collection/analyticsjs/](Universal Analytics/Analytics.js)
+* Added support for [Display Advertising](https://support.google.com/analytics/answer/2444872)
+* Added support for [Universal Analytics/Analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
 * Removed closing "?>" from ga-google-analytics.php
 * Tested with the latest version of WordPress (3.7)
 
@@ -91,7 +91,7 @@ Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/goo
 
 To ask a question, visit the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/) or [contact me](http://perishablepress.com/contact/).
 
-Learn more about [http://www.google.com/analytics/](Google Analytics) and [http://perishablepress.com/3-ways-track-google-analytics/](GA tracking methods).
+Learn more about [Google Analytics](http://www.google.com/analytics/) and [GA tracking methods](http://perishablepress.com/3-ways-track-google-analytics/).
 
 == Donations ==
 
