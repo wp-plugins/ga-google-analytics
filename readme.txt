@@ -28,8 +28,8 @@ Inserts tracking code only, view your stats in your Google account.
 * Inserts your tracking code on all theme pages
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
-* Now supports [https://support.google.com/analytics/answer/2444872](Display Advertising)
-* Now supports [https://developers.google.com/analytics/devguides/collection/analyticsjs/](Universal Analytics/Analytics.js)
+* Now supports Universal Analytics/Analytics.js
+* Now supports Display Advertising
 
 Learn more about [http://www.google.com/analytics/](Google Analytics)!
 
