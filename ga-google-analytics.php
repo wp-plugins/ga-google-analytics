@@ -6,7 +6,7 @@
 	Author: Jeff Starr
 	Author URI: http://monzilla.biz/
 	Donate link: http://m0n.co/donate
-	Version: 20130705
+	Version: 20131104
 	License: GPL v2
 	Usage: Visit the "Google Analytics" options page to enter your GA ID and done.
 	Tags: analytics, ga, google, google analytics, tracking, statistics, stats
@@ -14,8 +14,8 @@
 
 // NO EDITING REQUIRED - PLEASE SET PREFERENCES IN THE WP ADMIN!
 
-$gap_version = '20130705';
-
+$gap_version = '20131104';
+if (!defined('ABSPATH')) die();
 load_plugin_textdomain('gap', false, dirname( plugin_basename( __FILE__ ) ).'/languages');
 
 $gap_plugin  = __('GA Google Analytics', 'gap');
@@ -40,22 +40,42 @@ function gap_require_wp_version() {
 // Google Analytics Tracking Code (ga.js)
 // @ http://code.google.com/apis/analytics/docs/tracking/asyncUsageGuide.html
 function google_analytics_tracking_code(){ 
-	$options = get_option('gap_options'); 
-	if ($options['gap_enable']) { ?>
+	$options = get_option('gap_options');
+	$ga_src  = "('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';";
+	$ga_alt  = "('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';";
+	$ga_ads  = $options['gap_display_ads'];
+	$ga_uni  = $options['gap_universal'];
+	$ga_on   = $options['gap_enable'];
+	$ga_id   = $options['gap_id'];
 
-		<script type="text/javascript">
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', '<?php echo $options['gap_id']; ?>']);
-		  _gaq.push(['_trackPageview']);
-		
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
+	if ($ga_on) {
+		if ($ga_ads) $ga_src = $ga_alt; 
+		if ($ga_uni) { ?>
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', '<?php echo $ga_id; ?>');
+			ga('send', 'pageview');
 		</script>
 
-<?php }
+		<?php } else { ?>
+
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', '<?php echo $ga_id; ?>']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = <?php echo $ga_src . "\n"; ?>
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+
+	<?php }
+	}
 }
 
 // include tracking code in header or footer
@@ -94,6 +114,8 @@ function gap_add_defaults() {
 			'gap_id'          => 'UA-XXXXX-X',
 			'gap_enable'      => 0,
 			'gap_location'    => 'header',
+			'gap_display_ads' => 0,
+			'gap_universal'   => 0, 
 		);
 		update_option('gap_options', $arr);
 	}
@@ -119,6 +141,12 @@ function gap_validate_options($input) {
 
 	if (!isset($input['gap_location'])) $input['gap_location'] = null;
 	if (!array_key_exists($input['gap_location'], $gap_location)) $input['gap_location'] = null;
+
+	if (!isset($input['gap_display_ads'])) $input['gap_display_ads'] = null;
+	$input['gap_display_ads'] = ($input['gap_display_ads'] == 1 ? 1 : 0);
+
+	if (!isset($input['gap_universal'])) $input['gap_universal'] = null;
+	$input['gap_universal'] = ($input['gap_universal'] == 1 ? 1 : 0);
 
 	return $input;
 }
@@ -225,6 +253,20 @@ function gap_render_form() {
 											<?php _e('Include the GA Tracking Code in your web pages?', 'gap') ?>
 										</td>
 									</tr>
+									<tr valign="top">
+										<th scope="row"><label class="description" for="gap_options[gap_display_ads]"><?php _e('Enable Display Ads?', 'gap') ?></label></th>
+										<td>
+											<input name="gap_options[gap_display_ads]" type="checkbox" value="1" <?php if (isset($gap_options['gap_display_ads'])) { checked('1', $gap_options['gap_display_ads']); } ?> /> 
+											<?php _e('Use alternate tracking code for', 'gap'); ?> <a href="https://support.google.com/analytics/answer/2444872"><?php _e('Display Advertising', 'gap'); ?></a>?
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row"><label class="description" for="gap_options[gap_universal]"><?php _e('Universal Analytics?', 'gap') ?></label></th>
+										<td>
+											<input name="gap_options[gap_universal]" type="checkbox" value="1" <?php if (isset($gap_options['gap_universal'])) { checked('1', $gap_options['gap_universal']); } ?> /> 
+											<?php _e('Use alternate tracking code for', 'gap'); ?> <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/"><?php _e('Universal Analytics', 'gap'); ?></a>?
+										</td>
+									</tr>
 									<tr>
 										<th scope="row"><label class="description" for="gap_options[gap_location]"><?php _e('Code Location', 'gap'); ?></label></th>
 										<td>
@@ -321,4 +363,4 @@ function gap_render_form() {
 		});
 	</script>
 
-<?php } ?>
+<?php }

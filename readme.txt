@@ -9,9 +9,9 @@ Author URI: http://monzilla.biz/
 Contributors: specialk
 Donate link: http://m0n.co/donate
 Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 20130705
-Version: 20130705
+Tested up to: 3.7
+Stable tag: trunk
+Version: 20131104
 License: GPL v2
 
 GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
@@ -28,6 +28,10 @@ Inserts tracking code only, view your stats in your Google account.
 * Inserts your tracking code on all theme pages
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
+* Now supports [https://support.google.com/analytics/answer/2444872](Display Advertising)
+* Now supports [https://developers.google.com/analytics/devguides/collection/analyticsjs/](Universal Analytics/Analytics.js)
+
+Learn more about [http://www.google.com/analytics/](Google Analytics)!
 
 == Installation ==
 
@@ -51,6 +55,14 @@ For more information, visit the [GA Plugin Homepage](http://perishablepress.com/
 Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Changelog ==
+
+**Version 20131104**
+
+* Added line to check for WP, prevent direct loading of script
+* Added support for [https://support.google.com/analytics/answer/2444872](Display Advertising)
+* Added support for [https://developers.google.com/analytics/devguides/collection/analyticsjs/](Universal Analytics/Analytics.js)
+* Removed closing "?>" from ga-google-analytics.php
+* Tested with the latest version of WordPress (3.7)
 
 **Version 20130705**
 
@@ -78,6 +90,8 @@ Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/goo
 == Frequently Asked Questions ==
 
 To ask a question, visit the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/) or [contact me](http://perishablepress.com/contact/).
+
+Learn more about [http://www.google.com/analytics/](Google Analytics) and [http://perishablepress.com/3-ways-track-google-analytics/](GA tracking methods).
 
 == Donations ==
 
