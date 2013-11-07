@@ -11,7 +11,7 @@ Donate link: http://m0n.co/donate
 Requires at least: 3.0
 Tested up to: 3.7
 Stable tag: trunk
-Version: 20131104
+Version: 20131107
 License: GPL v2
 
 GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
@@ -55,6 +55,12 @@ For more information, visit the [GA Plugin Homepage](http://perishablepress.com/
 Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Changelog ==
+
+**20131107**
+
+* Added uninstall.php file
+* Added "rate this plugin" links
+* Added support for i18n
 
 **Version 20131104**
 

@@ -6,7 +6,7 @@
 	Author: Jeff Starr
 	Author URI: http://monzilla.biz/
 	Donate link: http://m0n.co/donate
-	Version: 20131104
+	Version: 20131107
 	License: GPL v2
 	Usage: Visit the "Google Analytics" options page to enter your GA ID and done.
 	Tags: analytics, ga, google, google analytics, tracking, statistics, stats
@@ -14,10 +14,15 @@
 
 // NO EDITING REQUIRED - PLEASE SET PREFERENCES IN THE WP ADMIN!
 
-$gap_version = '20131104';
 if (!defined('ABSPATH')) die();
-load_plugin_textdomain('gap', false, dirname( plugin_basename( __FILE__ ) ).'/languages');
 
+// i18n
+function gap_i18n_init() {
+	load_plugin_textdomain('gap', false, dirname(plugin_basename(__FILE__)) . '/languages');
+}
+add_action('plugins_loaded', 'gap_i18n_init');
+
+$gap_version = '20131107';
 $gap_plugin  = __('GA Google Analytics', 'gap');
 $gap_options = get_option('gap_options');
 $gap_path    = plugin_basename(__FILE__); // 'ga-google-analytics/ga-google-analytics.php';
@@ -95,6 +100,16 @@ function gap_plugin_action_links($links, $file) {
 	}
 	return $links;
 }
+
+// rate plugin link
+function add_gap_links($links, $file) {
+	if ($file == plugin_basename(__FILE__)) {
+		$rate_url = 'http://wordpress.org/support/view/plugin-reviews/' . basename(dirname(__FILE__)) . '?rate=5#postform';
+		$links[] = '<a href="' . $rate_url . '" target="_blank" title="Click here to rate and review this plugin on WordPress.org">Rate this plugin</a>';
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'add_gap_links', 10, 2);
 
 // delete plugin settings
 function gap_delete_plugin_options() {
@@ -228,6 +243,11 @@ function gap_render_form() {
 									<li><?php _e('To enter your GA ID, visit', 'gap'); ?> <a id="mm-panel-primary-link" href="#mm-panel-primary"><?php _e('GA Plugin Options', 'gap'); ?></a>.</li>
 									<li><?php _e('To restore default settings, visit', 'gap'); ?> <a id="mm-restore-settings-link" href="#mm-restore-settings"><?php _e('Restore Default Options', 'gap'); ?></a>.</li>
 									<li><?php _e('For more information check the <code>readme.txt</code> and', 'gap'); ?> <a href="<?php echo $gap_homeurl; ?>" target="_blank"><?php _e('GA Plugin Homepage', 'gap'); ?></a>.</li>
+									<li><?php _e('If you like this plugin, please', 'gap'); ?> 
+										<a href="http://wordpress.org/support/view/plugin-reviews/<?php echo basename(dirname(__FILE__)); ?>?rate=5#postform" title="<?php _e('Click here to rate and review this plugin on WordPress.org', 'gap'); ?>" target="_blank">
+											<?php _e('rate it at the Plugin Directory', 'gap'); ?>&nbsp;&raquo;
+										</a>
+									</li>
 								</ul>
 								<p><small><?php _e('Note that it can take 24-48 hours after adding the tracking code before any analytical data appears in your Google Analytics account. 
 												To check that the GA tacking code is included, look at the source code of your web page(s). Learn more at the official', 'gap'); ?> 
