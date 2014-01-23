@@ -59,6 +59,7 @@ Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/goo
 **20140123**
 
 * Tested with latest WordPress (3.8)
+* Added trailing slash to load_plugin_textdomain()
 
 **20131107**
 

@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) die();
 
 // i18n
 function gap_i18n_init() {
-	load_plugin_textdomain('gap', false, dirname(plugin_basename(__FILE__)) . '/languages');
+	load_plugin_textdomain('gap', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 }
 add_action('plugins_loaded', 'gap_i18n_init');
 
