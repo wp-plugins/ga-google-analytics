@@ -8,10 +8,10 @@ Author: Jeff Starr
 Author URI: http://monzilla.biz/
 Contributors: specialk
 Donate link: http://m0n.co/donate
-Requires at least: 3.0
-Tested up to: 3.8
+Requires at least: 3.7
+Tested up to: 4.0
 Stable tag: trunk
-Version: 20140123
+Version: 20140923
 License: GPL v2
 
 GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
@@ -28,8 +28,14 @@ Inserts tracking code only, view your stats in your Google account.
 * Inserts your tracking code on all theme pages
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
-* Now supports [Universal Analytics/Analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
-* Now supports [Display Advertising](https://support.google.com/analytics/answer/2444872)
+
+**Support**
+
+* Supports [Classic Analytics/ga.js](https://developers.google.com/analytics/devguides/collection/gajs/)
+* Supports [Universal Analytics/analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
+* Supports [Display Advertising](https://support.google.com/analytics/answer/2444872)
+* Supports [Enhanced Link Attribution](https://support.google.com/analytics/answer/2558867)
+* Supports [Tracker Objects](https://developers.google.com/analytics/devguides/collection/analyticsjs/advanced#creation)
 
 Learn more about [Google Analytics](http://www.google.com/analytics/)!
 
@@ -55,6 +61,19 @@ For more information, visit the [GA Plugin Homepage](http://perishablepress.com/
 Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Changelog ==
+
+**20140922**
+
+* Tested with latest version of WP (4.0)
+* Increased minimum version to WP 3.7
+* Added conditional check for min-version function
+* Added optional field to display any other codes
+* Improved layout and terminology of settings page
+* Updated GA code for Display Advertising
+* Added support for Enhanced Link Attribution
+* Added support for Tracker Objects
+* Refactored google_analytics_tracking_code()
+* Updated mo/po translation files
 
 **20140123**
 

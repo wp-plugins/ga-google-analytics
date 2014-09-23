@@ -6,7 +6,7 @@
 	Author: Jeff Starr
 	Author URI: http://monzilla.biz/
 	Donate link: http://m0n.co/donate
-	Version: 20140123
+	Version: 20140923
 	License: GPL v2
 	Usage: Visit the "Google Analytics" options page to enter your GA ID and done.
 	Tags: analytics, ga, google, google analytics, tracking, statistics, stats
@@ -22,39 +22,52 @@ function gap_i18n_init() {
 }
 add_action('plugins_loaded', 'gap_i18n_init');
 
-$gap_version = '20140123';
+$gap_version = '20140923';
 $gap_plugin  = __('GA Google Analytics', 'gap');
 $gap_options = get_option('gap_options');
 $gap_path    = plugin_basename(__FILE__); // 'ga-google-analytics/ga-google-analytics.php';
 $gap_homeurl = 'http://perishablepress.com/ga-google-analytics/';
 
 // require minimum version of WordPress
-add_action('admin_init', 'gap_require_wp_version');
 function gap_require_wp_version() {
 	global $wp_version, $gap_path, $gap_plugin;
-	if (version_compare($wp_version, '3.4', '<')) {
+	if (version_compare($wp_version, '3.7', '<')) {
 		if (is_plugin_active($gap_path)) {
 			deactivate_plugins($gap_path);
-			$msg =  '<strong>' . $gap_plugin . '</strong> ' . __('requires WordPress 3.4 or higher, and has been deactivated!', 'gap') . '<br />';
+			$msg =  '<strong>' . $gap_plugin . '</strong> ' . __('requires WordPress 3.7 or higher, and has been deactivated!', 'gap') . '<br />';
 			$msg .= __('Please return to the ', 'gap') . '<a href="' . admin_url() . '">' . __('WordPress Admin area', 'gap') . '</a> ' . __('to upgrade WordPress and try again.', 'gap');
 			wp_die($msg);
 		}
 	}
 }
+if (isset($_GET['activate']) && $_GET['activate'] == 'true') {
+	add_action('admin_init', 'gap_require_wp_version');
+}
 
 // Google Analytics Tracking Code (ga.js)
 // @ http://code.google.com/apis/analytics/docs/tracking/asyncUsageGuide.html
-function google_analytics_tracking_code(){ 
-	$options = get_option('gap_options');
-	$ga_src  = "('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';";
-	$ga_alt  = "('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';";
-	$ga_ads  = $options['gap_display_ads'];
-	$ga_uni  = $options['gap_universal'];
-	$ga_on   = $options['gap_enable'];
-	$ga_id   = $options['gap_id'];
-
+function google_analytics_tracking_code() { 
+	$options    = get_option('gap_options');
+	
+	$ga_src      = "('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';";
+	$ga_alt      = "('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';";
+	$ga_display  = "ga('require', 'displayfeatures');";
+	$ga_link_uni = "ga('require', 'linkid', 'linkid.js');";
+	$ga_link_cla = "var pluginUrl =
+			'//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+			_gaq.push(['_require', 'inpage_linkid', pluginUrl]);";
+	
+	$ga_ads      = $options['gap_display_ads'];
+	$ga_uni      = $options['gap_universal'];
+	$ga_on       = $options['gap_enable'];
+	$ga_id       = $options['gap_id'];
+	$ga_custom   = $options['gap_custom'];
+	$ga_link     = $options['link_attr'];
+	$ga_tracker  = $options['tracker_object'];
+	
+	if ($ga_ads) $ga_src = $ga_alt ;
+	
 	if ($ga_on) {
-		if ($ga_ads) $ga_src = $ga_alt; 
 		if ($ga_uni) { ?>
 
 		<script>
@@ -62,15 +75,18 @@ function google_analytics_tracking_code(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', '<?php echo $ga_id; ?>');
-			ga('send', 'pageview');
+			ga('create', '<?php echo $ga_id; ?>'<?php if (!empty($ga_tracker)) echo ", " . $ga_tracker; ?>);
+			<?php 
+				if ($ga_ads) echo $ga_display . "\n\t\t\t";
+				if ($ga_link) echo $ga_link_uni . "\n\t\t\t";
+			?>ga('send', 'pageview');
 		</script>
-
 		<?php } else { ?>
 
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', '<?php echo $ga_id; ?>']);
+			<?php if ($ga_link) echo $ga_link_cla . "\n\t\t\t"; 
+			?>_gaq.push(['_setAccount', '<?php echo $ga_id; ?>']);
 			_gaq.push(['_trackPageview']);
 			(function() {
 				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -78,9 +94,9 @@ function google_analytics_tracking_code(){
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
-
 	<?php }
-	}
+		if (!empty($ga_custom)) echo $ga_custom . "\n";
+	}	
 }
 
 // include tracking code in header or footer
@@ -131,6 +147,9 @@ function gap_add_defaults() {
 			'gap_location'    => 'header',
 			'gap_display_ads' => 0,
 			'gap_universal'   => 0, 
+			'gap_custom'      => '',
+			'link_attr'       => 0,
+			'tracker_object'  => '',
 		);
 		update_option('gap_options', $arr);
 	}
@@ -162,7 +181,47 @@ function gap_validate_options($input) {
 
 	if (!isset($input['gap_universal'])) $input['gap_universal'] = null;
 	$input['gap_universal'] = ($input['gap_universal'] == 1 ? 1 : 0);
+	
+	
+	
+	// dealing with kses
+	global $allowedposttags;
+	$allowed_atts = array(
+		'align'=>array(), 'class'=>array(), 'id'=>array(), 'dir'=>array(), 'lang'=>array(), 'style'=>array(), 'label'=>array(), 'url'=>array(), 
+		'xml:lang'=>array(), 'src'=>array(), 'alt'=>array(), 'name'=>array(), 'content'=>array(), 'http-equiv'=>array(), 'profile'=>array(), 
+		'href'=>array(), 'property'=>array(), 'title'=>array(), 'rel'=>array(), 'type'=>array(), 'charset'=>array(), 'media'=>array(), 'rev'=>array(),
+		);
+	$allowedposttags['strong'] = $allowed_atts;
+	$allowedposttags['script'] = $allowed_atts;
+	$allowedposttags['style'] = $allowed_atts;
+	$allowedposttags['small'] = $allowed_atts;
+	$allowedposttags['span'] = $allowed_atts;
+	$allowedposttags['meta'] = $allowed_atts;
+	$allowedposttags['item'] = $allowed_atts;
+	$allowedposttags['base'] = $allowed_atts;
+	$allowedposttags['link'] = $allowed_atts;
+	$allowedposttags['abbr'] = $allowed_atts;
+	$allowedposttags['code'] = $allowed_atts;
+	$allowedposttags['div'] = $allowed_atts;
+	$allowedposttags['img'] = $allowed_atts;
+	$allowedposttags['h1'] = $allowed_atts;
+	$allowedposttags['h2'] = $allowed_atts;
+	$allowedposttags['h3'] = $allowed_atts;
+	$allowedposttags['h4'] = $allowed_atts;
+	$allowedposttags['h5'] = $allowed_atts;
+	$allowedposttags['ol'] = $allowed_atts;
+	$allowedposttags['ul'] = $allowed_atts;
+	$allowedposttags['li'] = $allowed_atts;
+	$allowedposttags['em'] = $allowed_atts;
+	$allowedposttags['p'] = $allowed_atts;
+	$allowedposttags['a'] = $allowed_atts;
 
+	$input['gap_custom'] = wp_kses($input['gap_custom'], $allowedposttags);
+	$input['tracker_object'] = wp_kses($input['tracker_object'], $allowedposttags);
+	
+	if (!isset($input['link_attr'])) $input['link_attr'] = null;
+	$input['link_attr'] = ($input['link_attr'] == 1 ? 1 : 0);
+	
 	return $input;
 }
 
@@ -197,15 +256,16 @@ function gap_render_form() {
 		#mm-plugin-options h4, 
 		#mm-plugin-options p { margin: 15px; line-height: 18px; }
 		#mm-plugin-options p.mm-alt { margin: 15px 0; }
+		#mm-plugin-options .mm-item-caption { font-size: 11px; }
 		#mm-plugin-options ul { margin: 15px 15px 15px 40px; }
 		#mm-plugin-options li { margin: 10px 0; list-style-type: disc; }
 		#mm-plugin-options abbr { cursor: help; border-bottom: 1px dotted #dfdfdf; }
 
 		.mm-table-wrap { margin: 15px; }
-		.mm-table-wrap td { padding: 5px 10px; vertical-align: middle; }
+		.mm-table-wrap td { padding: 15px; vertical-align: middle; }
 		.mm-table-wrap .mm-table {}
-		.mm-table-wrap .widefat td { padding: 5px 10px; vertical-align: middle; }
-		.mm-table-wrap .widefat th { padding: 5px 10px; vertical-align: middle; }
+		.mm-table-wrap .widefat td { vertical-align: middle; }
+		.mm-table-wrap .widefat th { width: 25%; vertical-align: middle; }
 		.mm-code { background-color: #fafae0; color: #333; font-size: 14px; }
 		.mm-radio-inputs { margin: 7px 0; }
 		.mm-radio-inputs span { padding-left: 5px; }
@@ -274,17 +334,24 @@ function gap_render_form() {
 										</td>
 									</tr>
 									<tr valign="top">
-										<th scope="row"><label class="description" for="gap_options[gap_display_ads]"><?php _e('Enable Display Ads?', 'gap') ?></label></th>
+										<th scope="row"><label class="description" for="gap_options[gap_universal]"><?php _e('Enable Universal Analytics', 'gap') ?></label></th>
 										<td>
-											<input name="gap_options[gap_display_ads]" type="checkbox" value="1" <?php if (isset($gap_options['gap_display_ads'])) { checked('1', $gap_options['gap_display_ads']); } ?> /> 
-											<?php _e('Use alternate tracking code for', 'gap'); ?> <a href="https://support.google.com/analytics/answer/2444872"><?php _e('Display Advertising', 'gap'); ?></a>?
+											<input name="gap_options[gap_universal]" type="checkbox" value="1" <?php if (isset($gap_options['gap_universal'])) { checked('1', $gap_options['gap_universal']); } ?> /> 
+											<?php _e('Enable support for', 'gap'); ?> <a target="_blank" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/"><?php _e('Universal Analytics', 'gap'); ?></a>?
 										</td>
 									</tr>
 									<tr valign="top">
-										<th scope="row"><label class="description" for="gap_options[gap_universal]"><?php _e('Universal Analytics?', 'gap') ?></label></th>
+										<th scope="row"><label class="description" for="gap_options[gap_display_ads]"><?php _e('Enable Display Advertising', 'gap') ?></label></th>
 										<td>
-											<input name="gap_options[gap_universal]" type="checkbox" value="1" <?php if (isset($gap_options['gap_universal'])) { checked('1', $gap_options['gap_universal']); } ?> /> 
-											<?php _e('Use alternate tracking code for', 'gap'); ?> <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/"><?php _e('Universal Analytics', 'gap'); ?></a>?
+											<input name="gap_options[gap_display_ads]" type="checkbox" value="1" <?php if (isset($gap_options['gap_display_ads'])) { checked('1', $gap_options['gap_display_ads']); } ?> /> 
+											<?php _e('Enable support for', 'gap'); ?> <a target="_blank" href="https://support.google.com/analytics/answer/2444872"><?php _e('Display Advertising', 'gap'); ?></a>?
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row"><label class="description" for="gap_options[link_attr]"><?php _e('Enable Link Attribution', 'gap') ?></label></th>
+										<td>
+											<input name="gap_options[link_attr]" type="checkbox" value="1" <?php if (isset($gap_options['link_attr'])) { checked('1', $gap_options['link_attr']); } ?> /> 
+											<?php _e('Enable support for', 'gap'); ?> <a target="_blank" href="https://support.google.com/analytics/answer/2558867?hl=en"><?php _e('Enhanced Link Attribution', 'gap'); ?></a>?
 										</td>
 									</tr>
 									<tr>
@@ -305,10 +372,27 @@ function gap_render_form() {
 														<span><?php echo $gap_loc['label']; ?></span>
 													</div>
 											<?php } ?>
-											<p class="mm-alt"><small>
+											<div class="mm-item-caption">
 												<?php _e('Tip: Google recommends including the Tracking Code in the document header, but including it in the footer can benefit page performance.
 														If in doubt, go with the default option to include the code in the header.', 'gap'); ?>
-											</small></p>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><label class="description" for="gap_options[gap_custom]"><?php _e('Custom Code', 'gap'); ?></label></th>
+										<td>
+											<textarea type="textarea" rows="3" cols="50" name="gap_options[gap_custom]"><?php if (isset($gap_options['gap_custom'])) echo esc_textarea($gap_options['gap_custom']); ?></textarea>
+											<div class="mm-item-caption"><?php _e('Here you may specify any markup to be displayed in the &lt;head&gt; section. Leave blank to disable.', 'gap'); ?></div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><label class="description" for="gap_options[tracker_object]"><?php _e('Custom Tracker Objects (Advanced)', 'gap'); ?></label></th>
+										<td>
+											<textarea type="textarea" rows="3" cols="50" name="gap_options[tracker_object]"><?php if (isset($gap_options['tracker_object'])) echo esc_textarea($gap_options['tracker_object']); ?></textarea>
+											<div class="mm-item-caption"> 
+												<?php _e('To enable Tracker Objects, enter your code here. Note: include straight brackets for single tracker, or curly brackets for multiple trackers.', 'gap'); ?> 
+												<a target="_blank" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/advanced#creation"><?php _e('Learn more about Tracker Objects', 'gap'); ?></a>
+											</div>
 										</td>
 									</tr>
 								</table>
@@ -333,7 +417,7 @@ function gap_render_form() {
 					</div>
 					<div id="mm-panel-current" class="postbox">
 						<h3><?php _e('Updates &amp; Info', 'gap'); ?></h3>
-						<div class="toggle">
+						<div class="toggle<?php if (!isset($_GET["settings-updated"])) { echo ' default-hidden'; } ?>">
 							<div id="mm-iframe-wrap">
 								<iframe src="http://perishablepress.com/current/index-gap.html"></iframe>
 							</div>
