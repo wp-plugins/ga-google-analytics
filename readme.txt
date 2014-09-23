@@ -26,6 +26,7 @@ Inserts tracking code only, view your stats in your Google account.
 * Uses latest version of GA Tracking Code
 * Include GA Tracking Code in header or footer
 * Inserts your tracking code on all theme pages
+* Includes option to add your own custom markup
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
 
