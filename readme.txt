@@ -6,12 +6,14 @@ Description: Adds your Google Analytics Tracking Code to your WordPress site.
 Tags: analytics, ga, google, google analytics, tracking, statistics, stats
 Author: Jeff Starr
 Author URI: http://monzilla.biz/
-Contributors: specialk
 Donate link: http://m0n.co/donate
-Requires at least: 3.7
-Tested up to: 4.0
+Contributors: specialk
+Requires at least: 3.8
+Tested up to: 4.1
 Stable tag: trunk
-Version: 20140923
+Version: 20150314
+Text Domain: gap
+Domain Path: /languages/
 License: GPL v2
 
 GA Google Analytics adds your Google Analytics Tracking Code to your WordPress site.
@@ -29,6 +31,7 @@ Inserts tracking code only, view your stats in your Google account.
 * Includes option to add your own custom markup
 * Sleek plugin Settings page with toggling panels
 * Lightweight, and born of simplicity, no frills
+* New! Option to include GA in the Admin Area
 
 **Support**
 
@@ -46,6 +49,7 @@ Learn more about [Google Analytics](http://www.google.com/analytics/)!
 
 1. Unzip, Upload, activate
 2. Visit the "Google Analytics" options page, enter your GA ID, and done.
+3. Optionally configure other settings for advanced functionality.
 
 **Upgrade Notice**
 
@@ -62,6 +66,18 @@ For more information, visit the [GA Plugin Homepage](http://perishablepress.com/
 Screenshots available at the [GA Plugin Homepage](http://perishablepress.com/google-analytics-plugin/).
 
 == Changelog ==
+
+**20150314**
+
+* Tested with latest version of WP (4.1)
+* Increased minimum version to WP 3.8
+* Added Text Domain and Domain Path to file header
+* Streamline/fine-tune plugin code
+* Removed valign="top" from settings page
+* Added option to enable GA reporting in Admin Area
+* Added alert/notice on settings page about Universal Analytics
+* Removed deprecated screen_icon()
+* Replaced default .mo/.po templates with .pot template
 
 **20140922**
 
@@ -126,6 +142,11 @@ Learn more about [Google Analytics](http://www.google.com/analytics/) and [GA tr
 
 == Donations ==
 
-I created this plugin with love for the WP community. To show support, consider purchasing one of my books: [The Tao of WordPress](http://wp-tao.com/), [Digging into WordPress](http://digwp.com/), or [.htaccess made easy](http://htaccessbook.com/).
+I created this plugin with love for the WP community. To show support, you can [make a donation](http://m0n.co/donate) or purchase one of my books: 
+
+* [The Tao of WordPress](http://wp-tao.com/)
+* [Digging into WordPress](http://digwp.com/)
+* [.htaccess made easy](http://htaccessbook.com/)
+* [WordPress Themes In Depth](http://wp-tao.com/wordpress-themes-book/)
 
 Links, tweets and likes also appreciated. Thanks! :)
